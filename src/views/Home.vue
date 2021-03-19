@@ -1,18 +1,30 @@
 <template>
     <div class="home">
-        <temperature-component />
+        <div>{{ currentTemp }}</div>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
 
-import TemperatureComponent from "../components/TemperatureComponent.vue"
+import TemperatureService from "../lib/TemperatureService.js"
 
 export default {
-    name: "Home",
-    components: {
-        TemperatureComponent,
+    name: "Current temperature",
+    data() {
+        return {
+            currentTemp: {},
+        }
+    },
+    async created() {
+        this.currentTemp = await TemperatureService.updateWeatherData()
+        console.log("current temp inside Home.vue created(): " + this.currentTemp)
+    },
+    watch: {
+        async currentTemp() {
+            this.currentTemp = await TemperatureService.updateWeatherData()
+            console.log("current temp inside Home.vue watch(): " + this.currentTemp)
+        },
     },
 }
 </script>

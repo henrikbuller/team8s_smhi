@@ -1,0 +1,25 @@
+const BASE_URL = "https://opendata-download-metfcst.smhi.se/api"
+const gbg = { name: "Göteborg", lng: 16.158, lat: 58.5812 }
+
+const TemperatureService = {
+    async updateWeatherData() {
+        const url = `${BASE_URL}/category/pmp3g/version/2/geotype/point/lon/${gbg.lng}/lat/${gbg.lat}/data.json`
+        const response = await fetch(url)
+        const forecast = await response.json()
+
+        console.log("current temp inside service async method:")
+        const currentTemp = findTemperature(forecast.timeSeries[0].parameters)
+        return currentTemp
+    },
+}
+function findTemperature(parameters) {
+    for (const param of parameters) {
+        if (param.name === "t") {
+            return param.values[0]
+        }
+    }
+
+    throw new Error("unable to find parameter for temperature")
+}
+
+export default TemperatureService

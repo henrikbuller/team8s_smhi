@@ -1,11 +1,11 @@
 import { createRouter, createWebHashHistory } from "vue-router"
-import TemperatureComponent from "../components/TemperatureComponent.vue"
+import Home from "../views/Home.vue"
 
 const routes = [
     {
         path: "/",
         name: "Home",
-        component: TemperatureComponent,
+        component: Home,
     },
     {
         path: "/about",
