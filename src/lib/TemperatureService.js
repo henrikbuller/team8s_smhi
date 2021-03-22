@@ -7,8 +7,8 @@ const TemperatureService = {
         const response = await fetch(url)
         const forecast = await response.json()
 
-        console.log("current temp inside service async method:")
         const currentTemp = findTemperature(forecast.timeSeries[0].parameters)
+        console.log("current temp inside service async method:" + currentTemp)
         return currentTemp
     },
 }
