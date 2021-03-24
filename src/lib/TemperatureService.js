@@ -1,4 +1,5 @@
 const BASE_URL = "https://opendata-download-metfcst.smhi.se/api"
+
 const gbg = { name: "Göteborg", lng: 16.158, lat: 58.5812 }
 
 const TemperatureService = {
