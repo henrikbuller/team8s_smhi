@@ -1,8 +1,7 @@
 <template>
     <div class="home">
-        <h1>Göteborg</h1>
+        <h1>{{ cityName }}</h1>
         <div id="temp">{{ currentTemp }}°C</div>
-        <h2>{{ city.name }}</h2>
     </div>
 </template>
 
@@ -21,24 +20,18 @@ export default {
         }
     },
     async created() {
-        // detta blev undefined
-        // let city = Data.city
-        // let lng = city.lng
-        // let lat = city.lat
-        // console.log(lng, " ", lat)
-
-        //Här ville vi anropa med lng och lat som inparameter
-        this.currentTemp = await TemperatureService.updateWeatherData()
+        console.log("store state city created: ", this.$store.state.city.name)
+        this.currentTemp = await TemperatureService.updateWeatherData(this.$store.state.city)
     },
     watch: {
         async currentTemp() {
-            // detta blev undefined
-            // let city = Data.city
-            // let lng = city.lng
-            // let lat = city.lat
-            // console.log(lng, " ", lat)
-            //Här ville vi anropa med lng och lat som inparameter
-            this.currentTemp = await TemperatureService.updateWeatherData()
+            console.log("store state city watch: ", this.$store.state.city)
+            this.currentTemp = await TemperatureService.updateWeatherData(this.$store.state.city)
+        },
+    },
+    computed: {
+        cityName() {
+            return this.$store.state.city.name
         },
     },
 }

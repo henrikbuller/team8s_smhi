@@ -1,10 +1,10 @@
 const BASE_URL = "https://opendata-download-metfcst.smhi.se/api"
 
-const gbg = { name: "Göteborg", lng: 16.158, lat: 58.5812 }
+// const gbg = { name: "Göteborg", lng: 16.158, lat: 58.5812 }
 
 const TemperatureService = {
-    async updateWeatherData() {
-        const url = `${BASE_URL}/category/pmp3g/version/2/geotype/point/lon/${gbg.lng}/lat/${gbg.lat}/data.json`
+    async updateWeatherData(city) {
+        const url = `${BASE_URL}/category/pmp3g/version/2/geotype/point/lon/${city.lng}/lat/${city.lat}/data.json`
         const response = await fetch(url)
         const forecast = await response.json()
 

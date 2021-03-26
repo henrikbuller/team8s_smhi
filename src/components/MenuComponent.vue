@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Data from "../lib/Data.js"
+//import Data from "../lib/Data.js"
 import CityList from "../lib/CityList.js"
 
 export default {
@@ -21,7 +21,8 @@ export default {
     },
     watch: {
         selected() {
-            Data.city = this.selected + ""
+            // Data.city = this.selected + ""
+            this.$store.commit("updateSelectedCity", this.selected)
         },
     },
 }
