@@ -2,6 +2,9 @@
     <div class="home">
         <h1>{{ cityName }}</h1>
         <div id="temp">{{ currentTemp }}°C</div>
+        <div id="symbol">
+            <img :src="symbol" alt="a weather symbol" />
+        </div>
     </div>
 </template>
 
@@ -9,24 +12,32 @@
 // @ is an alias to /src
 
 import TemperatureService from "../lib/TemperatureService.js"
-import Data from "../lib/Data.js"
+import symbol from "../assets/sun.png"
+
+//import Data from "../lib/Data.js"
 
 export default {
     name: "Current temperature",
     data() {
         return {
             currentTemp: {},
-            city: Data.city,
+            currentWeatherSymbol: {},
+            symbol: symbol,
+            //  city: Data.city,
         }
     },
     async created() {
         console.log("store state city created: ", this.$store.state.city.name)
-        this.currentTemp = await TemperatureService.updateWeatherData(this.$store.state.city)
+        let values = await TemperatureService.updateWeatherData(this.$store.state.city)
+        this.currentTemp = values.currentTemp
+        this.currentWeatherSymbol = values.currentWeatherSymbol
     },
     watch: {
         async currentTemp() {
             console.log("store state city watch: ", this.$store.state.city)
-            this.currentTemp = await TemperatureService.updateWeatherData(this.$store.state.city)
+            let values = await TemperatureService.updateWeatherData(this.$store.state.city)
+            this.currentTemp = values.currentTemp
+            this.currentWeatherSymbol = values.currentWeatherSymbol
         },
     },
     computed: {

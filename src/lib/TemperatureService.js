@@ -9,8 +9,13 @@ const TemperatureService = {
         const forecast = await response.json()
 
         const currentTemp = findTemperature(forecast.timeSeries[0].parameters)
-        console.log("current temp inside service async method:" + currentTemp)
-        return currentTemp
+        console.log("current temp inside service async method:", currentTemp)
+        const currentWeatherSymbol = findWeatherSymbol(forecast.timeSeries[0].parameters)
+        console.log("WeatherSymbol somethin: ", currentWeatherSymbol)
+        return {
+            currentTemp,
+            currentWeatherSymbol,
+        }
     },
 }
 function findTemperature(parameters) {
@@ -23,4 +28,13 @@ function findTemperature(parameters) {
     throw new Error("unable to find parameter for temperature")
 }
 
+function findWeatherSymbol(parameters) {
+    for (const param of parameters) {
+        if (param.name === "Wsymb2") {
+            return param.values[0]
+        }
+    }
+
+    throw new Error("unable to find parameter for wind")
+}
 export default TemperatureService

@@ -1,24 +1,24 @@
 <template>
     <div class="home">
         <menu-component />
-        <h1>{{ city }}</h1>
+        <!-- <h1>{{ $store.state.city.name }}</h1> -->
     </div>
 </template>
 
 <script>
 import MenuComponent from "../components/MenuComponent.vue"
-import Data from "../lib/Data.js"
+//import Data from "../lib/Data.js"
 
 export default {
     name: "Home",
     components: {
         MenuComponent,
     },
-    data() {
-        return {
-            city: Data.city,
-        }
-    },
+    // data() {
+    //     return {
+    //         city: Data.city,
+    //     }
+    // },
 }
 </script>
 
