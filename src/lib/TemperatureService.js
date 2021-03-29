@@ -11,7 +11,7 @@ const TemperatureService = {
         const currentTemp = findTemperature(forecast.timeSeries[0].parameters)
         console.log("current temp inside service async method:", currentTemp)
         const currentWeatherSymbol = findWeatherSymbol(forecast.timeSeries[0].parameters)
-        console.log("WeatherSymbol somethin: ", currentWeatherSymbol)
+        console.log("WeatherSymbol: ", currentWeatherSymbol)
         return {
             currentTemp,
             currentWeatherSymbol,
