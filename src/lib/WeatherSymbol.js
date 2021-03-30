@@ -1,19 +1,22 @@
-function setWeatherSymbol(currentWeatherSymbol) {
+function setWeatherSymbol(Wsymb2) {
     let imgUrl = ""
 
-    if (currentWeatherSymbol == 1 || currentWeatherSymbol == 2) {
-        imgUrl = "../assets/sun.png"
-    } else if (currentWeatherSymbol == 3 || currentWeatherSymbol == 4) {
-        imgUrl = "..assets/sun_cloudy.png"
-    } else if (currentWeatherSymbol == 5 || currentWeatherSymbol == 6 || currentWeatherSymbol == 7) {
-        imgUrl = "../assets/cloudy.png"
-    } else
-        currentWeatherSymbol == 8 ||
-            currentWeatherSymbol == 9 ||
-            currentWeatherSymbol == 18 ||
-            currentWeatherSymbol == 19
-    {
-        imgUrl = "../assets/cloudy.png"
+    if (Wsymb2 <= 2) {
+        imgUrl = require("../assets/sun.png")
+    } else if (Wsymb2 <= 4) {
+        imgUrl = require("../assets/sun_cloudy.png")
+    } else if (Wsymb2 <= 7) {
+        imgUrl = require("../assets/cloudy.png")
+    } else if (Wsymb2 <= 9 || Wsymb2 == 18 || Wsymb2 == 19) {
+        imgUrl = require("../assets/light_rain.png")
+    } else if (Wsymb2 === 11) {
+        imgUrl = require("../assets/heavy_rain.png")
+    } else if (Wsymb2 === 15 || Wsymb2 === 16 || Wsymb2 === 17 || Wsymb2 === 25 || Wsymb2 === 26 || Wsymb2 === 27) {
+        imgUrl = require("../assets/snow.png")
+    } else if (Wsymb2 === 21) {
+        imgUrl = require("../assets/thunder.png")
+    } else if (Wsymb2 === 12 || Wsymb2 === 13 || Wsymb2 === 14 || Wsymb2 === 22 || Wsymb2 === 23 || Wsymb2 === 24) {
+        imgUrl = require("../assets/snow_cloudy.png")
     }
     return imgUrl
 }
