@@ -5,7 +5,8 @@
         <div id="symbol">
             <img :src="imgUrl" alt="a weather symbol" style="height: 250px" />
         </div>
-        <slider-component />
+        <slider />
+        {{ value }}
     </div>
 </template>
 
@@ -14,7 +15,7 @@
 
 import TemperatureService from "../lib/TemperatureService.js"
 import WeatherSymbol from "../lib/WeatherSymbol.js"
-import SliderComponent from "../components/SliderComponent.vue"
+import Slider from "../components/SliderComponent.vue"
 
 //import Data from "../lib/Data.js"
 
@@ -25,12 +26,13 @@ export default {
             currentTemp: {},
             currentWeatherSymbol: {},
             imgUrl: "",
+            value: "",
 
             //  city: Data.city,
         }
     },
     components: {
-        SliderComponent,
+        Slider,
     },
     async created() {
         console.log("store state city created: ", this.$store.state.city.name)
