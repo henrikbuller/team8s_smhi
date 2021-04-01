@@ -19,6 +19,9 @@ export default {
             value: null,
         }
     },
+    // props: {
+    //     value: Number,
+    // },
     components: {
         Slider,
     },
