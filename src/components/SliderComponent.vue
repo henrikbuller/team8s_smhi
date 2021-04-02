@@ -11,6 +11,8 @@
 </template>
 
 <script>
+/* Denna komponent använd inte just nu, det ligger en Slider direkt i Sun.vue istället
+ */
 import Slider from "primevue/slider/sfc"
 
 export default {

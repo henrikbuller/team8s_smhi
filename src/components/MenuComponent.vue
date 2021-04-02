@@ -8,6 +8,7 @@
 </template>
 
 <script>
+/* Denna komponent används inte just nu, det ligger en */
 //import Data from "../lib/Data.js"
 import CityList from "../lib/CityList.js"
 
