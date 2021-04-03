@@ -55,7 +55,7 @@ export default {
         },
         formatTime(time) {
             if (time < 24) {
-                this.timestamp = this.time + ":00"
+                this.timestamp = time + ":00"
                 return
             }
             if (time >= 24) {
