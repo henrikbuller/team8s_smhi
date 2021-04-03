@@ -6,8 +6,8 @@
             <img :src="imgUrl" alt="a weather symbol" style="height: 250px" />
         </div>
 
-        <h3>Slider value: {{ value1 }}</h3>
-        <Slider v-model="value1" @change="updateData" />
+        <h3>{{ timestamp }}</h3>
+        <Slider v-model="value1" :min="1" :max="24" @change="updateData" />
     </div>
 </template>
 
@@ -30,6 +30,7 @@ export default {
             imgUrl: "",
             value: null,
             value1: 1,
+            timestamp: "",
 
             //  city: Data.city,
         }
@@ -41,6 +42,26 @@ export default {
             //Call current weather symbol
             this.currentWeatherSymbol = values.currentWeatherSymbol
             this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
+            this.calculateTime()
+        },
+        calculateTime: function () {
+            const today = new Date()
+            let time = today.getHours()
+
+            if (this.value1 > 1) {
+                time = time + this.value1 - 1
+            }
+            this.formatTime(time)
+        },
+        formatTime(time) {
+            if (time < 24) {
+                this.timestamp = this.time + ":00"
+                return
+            }
+            if (time >= 24) {
+                this.timestamp = time - 24 + ":00"
+                return
+            }
         },
     },
     components: {
@@ -54,6 +75,7 @@ export default {
         this.currentWeatherSymbol = values.currentWeatherSymbol
         this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
         console.log(this.imgUrl)
+        this.calculateTime()
     },
 
     watch: {
