@@ -14,6 +14,10 @@
     text-align: center;
     color: #2c3e50;
 }
+body {
+    background-color: #000c2c;
+    min-height: 100vh;
+}
 
 #nav {
     padding: 30px;
