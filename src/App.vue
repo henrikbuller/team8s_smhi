@@ -20,7 +20,8 @@ body {
 }
 
 #nav {
-    padding: 30px;
+    margin: 0px;
+    padding: 5px;
 }
 
 #nav a {
