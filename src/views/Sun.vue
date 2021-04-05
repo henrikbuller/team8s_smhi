@@ -1,10 +1,14 @@
 <template>
     <div class="home">
         <h1>{{ cityName }}</h1>
+        <p class="top">12:00</p>
+        <ve-progress :progress="50" color="#FFD604" :thickness="5" empty-thickness="1%" dash=" 24 1">
+            <div id="symbol">
+                <img :src="imgUrl" alt="a weather symbol" style="height: 100px" />
+            </div>
+        </ve-progress>
+        <p class="">00:00</p>
         <div id="temp">{{ currentTemp }}°C</div>
-        <div id="symbol">
-            <img :src="imgUrl" alt="a weather symbol" style="height: 250px" />
-        </div>
 
         <h3>{{ timestamp }}</h3>
         <Slider v-model="value1" :min="1" :max="24" @change="updateData" />
@@ -18,6 +22,7 @@ import TemperatureService from "../lib/TemperatureService.js"
 import WeatherSymbol from "../lib/WeatherSymbol.js"
 //import Slider from "../components/SliderComponent.vue"
 import Slider from "primevue/slider"
+import { VeProgress } from "vue-ellipse-progress"
 
 //import Data from "../lib/Data.js"
 
@@ -66,6 +71,7 @@ export default {
     },
     components: {
         Slider,
+        VeProgress,
     },
     async created() {
         console.log("store state city created: ", this.$store.state.city.name)
