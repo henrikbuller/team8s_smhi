@@ -15,7 +15,7 @@
     color: #2c3e50;
 }
 body {
-    background-color: #000c2c;
+    background-image: linear-gradient(#000c2c, #001647);
     min-height: 100vh;
 }
 

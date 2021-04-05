@@ -120,10 +120,6 @@ export default {
 </script>
 
 <style scoped>
-.home {
-    background-color: #000c2c;
-    min-height: 100vh;
-}
 #temp {
     font-size: xx-large;
 }
