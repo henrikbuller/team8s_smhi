@@ -3,14 +3,14 @@ const BASE_URL = "https://opendata-download-metfcst.smhi.se/api"
 // const gbg = { name: "Göteborg", lng: 16.158, lat: 58.5812 }
 
 const TemperatureService = {
-    async updateWeatherData(city) {
+    async updateWeatherData(city, hour) {
         const url = `${BASE_URL}/category/pmp3g/version/2/geotype/point/lon/${city.lng}/lat/${city.lat}/data.json`
         const response = await fetch(url)
         const forecast = await response.json()
 
-        const currentTemp = findTemperature(forecast.timeSeries[0].parameters)
+        const currentTemp = findTemperature(forecast.timeSeries[hour].parameters)
         console.log("current temp inside service async method:", currentTemp)
-        const currentWeatherSymbol = findWeatherSymbol(forecast.timeSeries[0].parameters)
+        const currentWeatherSymbol = findWeatherSymbol(forecast.timeSeries[hour].parameters)
         console.log("WeatherSymbol: ", currentWeatherSymbol)
         return {
             currentTemp,
