@@ -14,6 +14,10 @@
     text-align: center;
     color: #2c3e50;
 }
+body {
+    background-image: linear-gradient(#000c2c, #001647);
+    min-height: 100vh;
+}
 
 #nav {
     padding: 30px;
