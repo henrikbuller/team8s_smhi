@@ -1,9 +1,9 @@
 <template>
-    <div id="nav">
-        <router-link to="/">Home</router-link> | <router-link to="/about">About</router-link> |
-        <router-link to="/sun">Sun</router-link>
-    </div>
     <router-view />
+    <div id="nav">
+        <router-link to="/">Starsida</router-link> | <router-link to="/about">Vind</router-link> |
+        <router-link to="/sun">Soltimmar</router-link>
+    </div>
 </template>
 
 <style>
