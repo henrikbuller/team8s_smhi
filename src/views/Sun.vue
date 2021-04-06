@@ -1,26 +1,44 @@
 <template>
     <div class="home">
         <p class="top">12:00</p>
-        <ve-progress :progress="50" color="#FFD604" :thickness="5" empty-thickness="1%" dash=" 24 1" :size="200">
-            <div id="symbol">
-                <img :src="imgUrl" alt="a weather symbol" style="height: 100px" />
+        <ve-progress
+            :progress="(value1 * 100) / 24"
+            color="white"
+            :thickness="1"
+            empty-thickness="1%"
+            dash=" 24 1"
+            :size="180"
+            dot="10% #FFD604"
+        >
+            <div class="middle" style="display: flex; flex-direction: row">
+                <div id="symbol">
+                    <img
+                        :src="imgUrl"
+                        alt="a weather symbol"
+                        style="flex: 1; height: 100px; justify-content: center; align-items: center"
+                    />
+                </div>
             </div>
         </ve-progress>
-        <p class="">00:00</p>
+        <p class="bottom">00:00</p>
         <p class="sun">{{ sunrise }} | {{ sunset }}</p>
 
         <!-- <h3>{{ timestamp }}</h3> -->
-        <Slider v-model="value1" :min="1" :max="24" @change="updateData" />
-        <Carousel :items-to-show="2.5" :wrap-around="true">
+        <Slider v-model="value1" :min="1" :max="24" @change="updateData" style="margin: 10%" />
+        <Carousel :items-to-show="3.5" :wrap-around="false" style="font-family: Open Sans Regular; margin: 15px">
             <Slide class="carousel__item" v-for="date in dates" :key="date.name">
                 <div class="date">
                     {{ date.name }} <br />
                     {{ date.date }} {{ date.month }}
                 </div>
                 <div class="temp">{{ currentTemp }}°C</div>
+                <div style="overflow-x: hidden; width: 100%; margin-bottom: 0px; position: absolute; bottom: 0">
+                    <div style="float: left; font-size: 14px">L:-9°</div>
+                    <div style="float: right; font-size: 14px">H:21°</div>
+                </div>
             </Slide>
 
-            <template #addons>
+            <template #addons {{ currentSlide }}>
                 <navigation />
                 <pagination />
             </template>
@@ -142,16 +160,34 @@ export default {
 </script>
 
 <style scoped>
-#temp {
-    font-size: xx-large;
+:root {
+    --carousel-color-primary: lightgray;
+}
+.home {
+    overflow-x: hidden;
+}
+body {
+    overflow-x: hidden;
+}
+
+.currentSlide {
+    color: red;
 }
 .layout-content {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.carousel {
+    justify-content: center;
+    align-items: center;
+}
+.carousel__pagination {
+    padding: 0px;
+    margin-bottom: 5px;
+}
 .carousel__item {
-    min-height: 150px;
+    min-height: 140px;
     width: 100%;
     /* background-color: var(--carousel-color-primary); */
 
@@ -161,19 +197,22 @@ export default {
     border-style: solid;
     border-color: white;
     border-radius: 0px;
+    border-width: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 5px;
+    margin: auto 5px;
     flex-flow: column nowrap;
 }
 
 .carousel__slide {
     padding: 0px;
+    width: 100%;
 }
 
 .carousel__prev,
 .carousel__next {
+    background-color: lightgray;
     box-sizing: content-box;
     border: 5px solid white;
 }
@@ -182,6 +221,12 @@ export default {
     bottom: 0;
 }
 .temp {
-    font-size: xx-large;
+    font-size: 26px;
+}
+.top {
+    margin: 5px;
+}
+.bottom {
+    margin: 5px;
 }
 </style>
