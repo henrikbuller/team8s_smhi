@@ -22,6 +22,7 @@
         </ve-progress>
         <p class="bottom">00:00</p>
         <p class="sun">{{ sunrise }} | {{ sunset }}</p>
+        <p class="sun-hours">{{ sunHours }}</p>
 
         <!-- <h3>{{ timestamp }}</h3> -->
         <Slider v-model="value1" :min="1" :max="24" @change="updateData" style="margin: 10%" />
@@ -38,7 +39,7 @@
                 </div>
             </Slide>
 
-            <template #addons {{ currentSlide }}>
+            <template #addons>
                 <navigation />
                 <pagination />
             </template>
@@ -59,6 +60,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 import "vue3-carousel/dist/carousel.css"
 import DateList from "../lib/DateList.js"
 import { getSunrise, getSunset } from "sunrise-sunset-js"
+import { differenceInMinutes } from "date-fns"
 
 //import Data from "../lib/Data.js"
 
@@ -74,6 +76,7 @@ export default {
             timestamp: "",
             dates: DateList,
             sunrise: "",
+            sunHours: "",
             //  sunset: "",
 
             //  city: Data.city,
@@ -113,6 +116,9 @@ export default {
         getSunset() {
             this.sunset = getSunset(this.$store.state.city.lng, this.$store.state.city.lat)
         },
+        getSunHours() {
+            this.sunHours = differenceInMinutes(this.sunrise, this.sunset)
+        },
     },
     components: {
         Slider,
@@ -138,6 +144,7 @@ export default {
             hour: "2-digit",
             minute: "2-digit",
         })
+        this.getSunHours()
     },
 
     watch: {
@@ -148,6 +155,7 @@ export default {
             this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
             getSunrise()
             getSunset()
+            this.getSunHours()
         },
         async change() {},
     },
@@ -170,9 +178,6 @@ body {
     overflow-x: hidden;
 }
 
-.currentSlide {
-    color: red;
-}
 .layout-content {
     display: flex;
     justify-content: center;
