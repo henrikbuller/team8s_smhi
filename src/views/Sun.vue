@@ -18,20 +18,16 @@
         <p class="sun">{{ sunrise }} | {{ sunset }}</p>
 
         <!-- <h3>{{ timestamp }}</h3> -->
-        <Slider v-model="value1" :min="1" :max="24" @change="updateData" />
-        <Carousel
-            :items-to-show="2.5"
-            :wrap-around="true"
-            style="font-family: Open Sans Regular; border-radius: 8px padding= 5em border-radius= 10em"
-        >
+        <Slider v-model="value1" :min="1" :max="24" @change="updateData" style="margin: 10%" />
+        <Carousel :items-to-show="2.5" :wrap-around="true" style="font-family: Open Sans Regular">
             <Slide class="carousel__item" v-for="date in dates" :key="date.name">
                 <div class="date">
                     {{ date.name }} <br />
                     {{ date.date }} {{ date.month }}
                 </div>
                 <div class="temp">{{ currentTemp }}°C</div>
-                <div style="text-align: left">-94°C</div>
-                <div style="text-align: right">51°C</div>
+                <div style="float: left">L:-94°C</div>
+                <div style="float: right">H:51°C</div>
             </Slide>
 
             <template #addons>
