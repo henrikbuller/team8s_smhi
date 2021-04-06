@@ -1,7 +1,15 @@
 <template>
     <div class="home">
         <p class="top">12:00</p>
-        <ve-progress :progress="50" color="#FFD604" :thickness="5" empty-thickness="1%" dash=" 24 1" :size="200">
+        <ve-progress
+            :progress="(value1 * 100) / 24"
+            color="white"
+            :thickness="1"
+            empty-thickness="1%"
+            dash=" 24 1"
+            :size="200"
+            dot="10% #FFD604"
+        >
             <div id="symbol">
                 <img :src="imgUrl" alt="a weather symbol" style="height: 100px" />
             </div>
@@ -11,13 +19,19 @@
 
         <!-- <h3>{{ timestamp }}</h3> -->
         <Slider v-model="value1" :min="1" :max="24" @change="updateData" />
-        <Carousel :items-to-show="2.5" :wrap-around="true">
+        <Carousel
+            :items-to-show="2.5"
+            :wrap-around="true"
+            style="font-family: Open Sans Regular; border-radius: 8px padding= 5em border-radius= 10em"
+        >
             <Slide class="carousel__item" v-for="date in dates" :key="date.name">
                 <div class="date">
                     {{ date.name }} <br />
                     {{ date.date }} {{ date.month }}
                 </div>
                 <div class="temp">{{ currentTemp }}°C</div>
+                <div style="text-align: left">-94°C</div>
+                <div style="text-align: right">51°C</div>
             </Slide>
 
             <template #addons>
