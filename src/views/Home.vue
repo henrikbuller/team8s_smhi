@@ -1,4 +1,6 @@
 <template>
+    <h1>SVEAVÄDER</h1>
+    <img src="../assets/sweden-map.jpg" height="400" width="150" alt="sweden map placeholder" />
     <div class="home">
         <menu-component />
         <!-- <h1>{{ $store.state.city.name }}</h1> -->
