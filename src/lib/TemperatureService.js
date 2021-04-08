@@ -14,7 +14,8 @@ const TemperatureService = {
         const response = await fetch(url)
         const forecast = await response.json()
 
-        convert(forecast)
+        let dataSet = convert(forecast)
+        matchDate(dataSet, 9)
 
         const currentTemp = findTemperature(forecast.timeSeries[hour].parameters)
         console.log("current temp inside service async method:", currentTemp)
@@ -42,11 +43,20 @@ function convert(forecast) {
     console.log("Logging convert function")
     console.log("currentDateData:")
     console.log(currentDateData)
-    console.log("forecast.timeseries:")
-    console.log(forecast.timeseries)
+
+    return currentDateData
 }
 
-// function matchDate(forecast, dateFromCarousel) {}
+function matchDate(dataSet, date) {
+    const currentDateList = []
+    for (const data of dataSet) {
+        if (data.date === date) {
+            currentDateList.push(data)
+        }
+    }
+    console.log("Logging matchDate:")
+    console.log(currentDateList)
+}
 
 function findTemperature(parameters) {
     for (const param of parameters) {
