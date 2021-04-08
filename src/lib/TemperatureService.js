@@ -16,6 +16,7 @@ const TemperatureService = {
 
         let dataSet = convert(forecast)
         matchDate(dataSet, 9)
+        // Gör ett objekt för varje dag i prognosen
 
         const currentTemp = findTemperature(forecast.timeSeries[hour].parameters)
         console.log("current temp inside service async method:", currentTemp)
@@ -37,6 +38,7 @@ function convert(forecast) {
             name: format(data.validTime, "eeee"),
             date: getDate(data.validTime),
             month: format(getMonth(data.validTime), "MMM"),
+            temperature: findOneTemp(data.parameters),
         }
         currentDateData.add(thisDate)
     }
@@ -58,6 +60,16 @@ function matchDate(dataSet, date) {
     console.log(currentDateList)
 }
 
+// function sortByDate(dataSet) {
+//     const sortedDataList = []
+// }
+function findOneTemp(parameters) {
+    for (const param of parameters) {
+        if (param.name === "t") {
+            return param.values[0]
+        }
+    }
+}
 function findTemperature(parameters) {
     for (const param of parameters) {
         if (param.name === "t") {
