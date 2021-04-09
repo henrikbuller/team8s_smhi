@@ -2,21 +2,25 @@
     <div class="home">
         <p class="top">12:00</p>
         <ve-progress
-            :progress="(value1 * 100) / 24"
+            :progress="(value * 100) / 24"
             color="white"
             :thickness="1"
             empty-thickness="1%"
             dash=" 24 1"
-            :size="180"
+            :size="240"
             dot="10% #FFD604"
+            :angle="100"
         >
-            <div class="middle" style="display: flex; flex-direction: row">
+            <div class="middle" style="display: flex; flex-direction: column">
                 <div id="symbol">
                     <img
                         :src="imgUrl"
                         alt="a weather symbol"
                         style="flex: 1; height: 100px; justify-content: center; align-items: center"
                     />
+                </div>
+                <div id="currentTime" style="flex: 1; height: 100px; justify-content: center; align-items: center">
+                    {{ value }}:00
                 </div>
             </div>
         </ve-progress>
@@ -25,18 +29,30 @@
         <p class="sun-hours">Antal soltimmar:<br />13h</p>
 
         <!-- <h3>{{ timestamp }}</h3> -->
-        <Slider v-model="value1" :min="1" :max="24" @change="updateData" style="margin: 10%" />
-        <Carousel :items-to-show="3.5" :wrap-around="false" style="font-family: Open Sans Regular; margin: 15px">
-            <Slide class="carousel__item" v-for="date in dates" :key="date.name">
+        <Slider v-model="value" :min="1" :max="24" @change="updateData" style="margin: 10%" />
+        <Carousel
+            :items-to-show="1"
+            :wrap-around="false"
+            :currentSlide="currentSlide"
+            :settings="settings"
+            style="font-family: Open Sans Regular; margin: 15px"
+            @click="nextSlide"
+        >
+            <Slide
+                class="carousel__item"
+                v-for="date in sortedDateObjects"
+                :key="date.name"
+                :currentSlide="currentSlide"
+            >
                 <div class="date">
-                    {{ date.name }} <br />
-                    {{ date.date }} {{ date.month }}
+                    {{ date[0].name }} <br />
+                    {{ date[0].date }} {{ date[0].month }}
                 </div>
-                <div class="temp">{{ currentTemp }}°C</div>
-                <div style="overflow-x: hidden; width: 100%; margin-bottom: 0px; position: absolute; bottom: 0">
+                <div class="temp">{{ date[value].temperature }}°C</div>
+                <!-- <div style="overflow-x: hidden; width: 100%; margin-bottom: 0px; position: absolute; bottom: 0">
                     <div style="float: left; font-size: 14px">L:-9°</div>
                     <div style="float: right; font-size: 14px">H:21°</div>
-                </div>
+                </div> -->
             </Slide>
 
             <template #addons>
@@ -62,7 +78,10 @@ import DateList from "../lib/DateList.js"
 import { getSunrise, getSunset } from "sunrise-sunset-js"
 
 //import Data from "../lib/Data.js"
-
+function getSliderPosition() {
+    const date = new Date()
+    return date.getHours()
+}
 export default {
     name: "Current temperature",
     data() {
@@ -71,12 +90,17 @@ export default {
             currentWeatherSymbol: {},
             sortedDateObjects: [],
             imgUrl: "",
-            value: null,
-            value1: 1,
+            value: getSliderPosition(),
             timestamp: "",
             dates: DateList,
             sunrise: "",
             sunHours: "",
+            currentSlide: 0,
+            settings: {
+                snapAlign: "center",
+            },
+            time: 0,
+            dayLength: "",
             //  sunset: "",
 
             //  city: Data.city,
@@ -84,8 +108,27 @@ export default {
     },
     methods: {
         async updateData() {
-            let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value1)
-            this.currentTemp = values.currentTemp
+            // välj nästa objekt i listan hos currentSlide
+            // this.currentSlide.date[value]
+
+            let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value)
+            // this.currentTemp = values.currentTemp
+            // let time = this.getHour()
+            // console.log("time: ", time)
+
+            // if (this.value === time) {
+            //     this.time = this.value - time
+            // }
+            // if (this.value != time) {
+            //     this.time = this.value
+            // }
+
+            this.time = this.timePlusOne()
+
+            console.log("this.dayLength: ", this.getDayLength())
+            // this.sortedDateObjects = values.sortedDateObjects
+            console.log("current slide in updateData():", this.currentSlide)
+            console.log("updateData value: ", this.value)
             //Call current weather symbol
             this.currentWeatherSymbol = values.currentWeatherSymbol
             this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
@@ -95,8 +138,8 @@ export default {
             const today = new Date()
             let time = today.getHours()
 
-            if (this.value1 > 1) {
-                time = time + this.value1 - 1
+            if (this.value > 1) {
+                time = time + this.value - 1
             }
             this.formatTime(time)
         },
@@ -116,6 +159,26 @@ export default {
         getSunset() {
             this.sunset = getSunset(this.$store.state.city.lng, this.$store.state.city.lat)
         },
+        nextSlide() {
+            this.value = 12
+            console.log("log this ..............................")
+            if (this.currentSlide >= 10) {
+                return
+            }
+            this.currentSlide += 1
+            console.log(this.currentSlide)
+        },
+        getDayLength() {
+            return this.sortedDateObjects[this.currentSlide].length
+        },
+        getHour() {
+            const today = new Date()
+            let time = today.getHours()
+            return time
+        },
+        timePlusOne(time) {
+            return time + 1
+        },
     },
     components: {
         Slider,
@@ -126,14 +189,21 @@ export default {
         VeProgress,
     },
     async created() {
-        let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value1)
+        let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value)
         this.currentTemp = values.currentTemp
         this.sortedDateObjects = values.sortedDateObjects
         //Call current weather symbol
         this.currentWeatherSymbol = values.currentWeatherSymbol
         this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
         this.calculateTime()
+        console.log("klockan: ", this.value)
 
+        // if (this.currentSlide === 0) {
+        //     this.value = this.getHours()
+        // }
+        // if (this.currentSlide > 0) {
+        //     this.value = 0
+        // }
         this.sunrise = getSunrise(this.$store.state.city.lat, this.$store.state.city.lng).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -147,14 +217,13 @@ export default {
 
     watch: {
         async currentTemp() {
-            let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value1)
+            let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value)
             this.currentTemp = values.currentTemp
             this.currentWeatherSymbol = values.currentWeatherSymbol
             this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
             getSunrise()
             getSunset()
         },
-        async change() {},
     },
     computed: {
         cityName() {
@@ -193,7 +262,6 @@ body {
     width: 100%;
     /* background-color: var(--carousel-color-primary); */
 
-    color: var(--carousel-color-white);
     font-size: 20px;
     border-radius: 8px;
     border-style: solid;
