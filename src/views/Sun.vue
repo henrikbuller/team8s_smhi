@@ -69,6 +69,7 @@ export default {
         return {
             currentTemp: {},
             currentWeatherSymbol: {},
+            sortedDateObjects: [],
             imgUrl: "",
             value: null,
             value1: 1,
@@ -127,6 +128,7 @@ export default {
     async created() {
         let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value1)
         this.currentTemp = values.currentTemp
+        this.sortedDateObjects = values.sortedDateObjects
         //Call current weather symbol
         this.currentWeatherSymbol = values.currentWeatherSymbol
         this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
@@ -140,7 +142,7 @@ export default {
             hour: "2-digit",
             minute: "2-digit",
         })
-        this.getSunHours()
+        console.log("log sortedDateObjects in created sun.vue: ", this.sortedDateObjects)
     },
 
     watch: {
@@ -151,7 +153,6 @@ export default {
             this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
             getSunrise()
             getSunset()
-            this.getSunHours()
         },
         async change() {},
     },

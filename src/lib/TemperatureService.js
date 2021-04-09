@@ -14,17 +14,20 @@ const TemperatureService = {
         const response = await fetch(url)
         const forecast = await response.json()
 
+        // Konverterar prognosen till objekt
         let dataSet = convert(forecast)
-        matchDate(dataSet, 9)
         // Gör ett objekt för varje dag i prognosen
+        let sortedDateObjects = sortByDate(dataSet)
+        //console.log("sortedDateObjects: ", sortedDateObjects)
 
         const currentTemp = findTemperature(forecast.timeSeries[hour].parameters)
-        console.log("current temp inside service async method:", currentTemp)
+        //console.log("current temp inside service async method:", currentTemp)
         const currentWeatherSymbol = findWeatherSymbol(forecast.timeSeries[hour].parameters)
-        console.log("WeatherSymbol: ", currentWeatherSymbol)
+        // console.log("WeatherSymbol: ", currentWeatherSymbol)
         return {
             currentTemp,
             currentWeatherSymbol,
+            sortedDateObjects,
         }
     },
 }
@@ -42,9 +45,9 @@ function convert(forecast) {
         }
         currentDateData.add(thisDate)
     }
-    console.log("Logging convert function")
-    console.log("currentDateData:")
-    console.log(currentDateData)
+    // console.log("Logging convert function")
+    // console.log("currentDateData:")
+    // console.log(currentDateData)
 
     return currentDateData
 }
@@ -56,13 +59,22 @@ function matchDate(dataSet, date) {
             currentDateList.push(data)
         }
     }
-    console.log("Logging matchDate:")
-    console.log(currentDateList)
+    // console.log("Logging matchDate:")
+    //  console.log(currentDateList)
+    return currentDateList
 }
 
-// function sortByDate(dataSet) {
-//     const sortedDataList = []
-// }
+function sortByDate(dataSet) {
+    const sortedDataList = []
+    const today = new Date().getDate()
+
+    // Gör 10st listor av objekt baserat på objektens datum
+    for (let i = 0; i < 10; ++i) {
+        sortedDataList.push(matchDate(dataSet, today + i))
+    }
+
+    return sortedDataList
+}
 function findOneTemp(parameters) {
     for (const param of parameters) {
         if (param.name === "t") {
