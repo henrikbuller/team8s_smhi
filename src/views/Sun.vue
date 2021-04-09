@@ -9,14 +9,18 @@
             dash=" 24 1"
             :size="180"
             dot="10% #FFD604"
+            :angle="80"
         >
-            <div class="middle" style="display: flex; flex-direction: row">
+            <div class="middle" style="display: flex; flex-direction: column">
                 <div id="symbol">
                     <img
                         :src="imgUrl"
                         alt="a weather symbol"
                         style="flex: 1; height: 100px; justify-content: center; align-items: center"
                     />
+                </div>
+                <div id="currentTime" style="flex: 1; height: 100px; justify-content: center; align-items: center">
+                    {{ value1 }}:00
                 </div>
             </div>
         </ve-progress>
