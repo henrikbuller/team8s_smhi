@@ -17,7 +17,7 @@ const TemperatureService = {
         const forecast = await response.json()
 
         // Konverterar prognosen till objekt
-        let dataSet = convert(forecast, this.lng, this.lat)
+        let dataSet = convert(forecast, city.lng, city.lat)
         // Gör ett objekt för varje dag i prognosen
         let sortedDateObjects = sortByDate(dataSet)
         //console.log("sortedDateObjects: ", sortedDateObjects)
@@ -40,20 +40,18 @@ function convert(forecast, lng, lat) {
     for (const data of forecast.timeSeries) {
         data.validTime = parseJSON(data.validTime)
         let shortDate = format(data.validTime, "yyyy-MM-dd")
-        console.log("shortDate: ", shortDate)
+        let sunRise = getSunrise(lat, lng, new Date(shortDate))
+        let sunSet = getSunset(lat, lng, new Date(shortDate))
+        let sunDuration = differenceInMinutes(sunSet, sunRise)
+
         const thisDate = {
             name: format(data.validTime, "eeee"),
             date: getDate(data.validTime),
             month: format(getMonth(data.validTime), "MMM"),
             // time: hämta timme
-            sunrise: getSunrise(lat, lng, shortDate),
-
-            sunset: getSunset(lat, lng, shortDate),
-            sunDuration:
-                differenceInMinutes(
-                    new Date("2021-01-01" + getSunrise(lat, lng, data.validTime)),
-                    new Date("2021-01-01" + getSunset(lat, lng, data.validTime))
-                ) / 60,
+            sunrise: format(sunRise, "HH:mm"),
+            sunset: format(sunSet, "HH:mm"),
+            sunDuration: (sunDuration / 60).toFixed(1),
             temperature: findOneTemp(data.parameters),
         }
         currentDateData.add(thisDate)

@@ -25,8 +25,12 @@
             </div>
         </ve-progress>
         <p class="bottom">00:00</p>
-        <p class="sun">{{ sunrise }} | {{ sunset }}</p>
-        <p class="sun-hours">Antal soltimmar:<br />13h</p>
+        <p class="sun">
+            <img src="../assets/sun_rise_set.png" alt="sunrise" style="height: 10px" />
+            {{ sortedDateObjects[currentSlide][0].sunrise }} | {{ sortedDateObjects[currentSlide][0].sunset }}
+            <img src="../assets/sun_rise_set.png" alt="sunrise" style="height: 10px" />
+        </p>
+        <p class="sun-hours">Antal soltimmar: <br />{{ sortedDateObjects[currentSlide][0].sunDuration }}h</p>
 
         <!-- <h3>{{ timestamp }}</h3> -->
         <Slider v-model="value" :min="1" :max="24" @change="updateData" style="margin: 10%" />
@@ -49,10 +53,10 @@
                     {{ date[0].date }} {{ date[0].month }}
                 </div>
                 <div class="temp">{{ date[value].temperature }}°C</div>
-                <!-- <div style="overflow-x: hidden; width: 100%; margin-bottom: 0px; position: absolute; bottom: 0">
+                <div style="overflow-x: hidden; width: 100%; margin-bottom: 0px; position: absolute; bottom: 0">
                     <div style="float: left; font-size: 14px">L:-9°</div>
                     <div style="float: right; font-size: 14px">H:21°</div>
-                </div> -->
+                </div>
             </Slide>
 
             <template #addons>
@@ -75,13 +79,13 @@ import "vue3-carousel/dist/carousel.css"
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 import "vue3-carousel/dist/carousel.css"
 import DateList from "../lib/DateList.js"
-import { getSunrise, getSunset } from "sunrise-sunset-js"
 
 //import Data from "../lib/Data.js"
 function getSliderPosition() {
     const date = new Date()
     return date.getHours()
 }
+
 export default {
     name: "Current temperature",
     data() {
@@ -94,13 +98,15 @@ export default {
             timestamp: "",
             dates: DateList,
             sunrise: "",
-            sunHours: "",
+            sunset: "",
+            sunDuration: "",
             currentSlide: 0,
             settings: {
                 snapAlign: "center",
             },
             time: 0,
             dayLength: "",
+
             //  sunset: "",
 
             //  city: Data.city,
@@ -122,8 +128,6 @@ export default {
             // if (this.value != time) {
             //     this.time = this.value
             // }
-
-            this.time = this.timePlusOne()
 
             console.log("this.dayLength: ", this.getDayLength())
             // this.sortedDateObjects = values.sortedDateObjects
@@ -153,12 +157,7 @@ export default {
                 return
             }
         },
-        getSunrise() {
-            this.sunrise = getSunrise(this.$store.state.city.lng, this.$store.state.city.lat)
-        },
-        getSunset() {
-            this.sunset = getSunset(this.$store.state.city.lng, this.$store.state.city.lat)
-        },
+
         nextSlide() {
             this.value = 12
             console.log("log this ..............................")
@@ -175,9 +174,6 @@ export default {
             const today = new Date()
             let time = today.getHours()
             return time
-        },
-        timePlusOne(time) {
-            return time + 1
         },
     },
     components: {
@@ -204,14 +200,7 @@ export default {
         // if (this.currentSlide > 0) {
         //     this.value = 0
         // }
-        this.sunrise = getSunrise(this.$store.state.city.lat, this.$store.state.city.lng).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-        })
-        this.sunset = getSunset(this.$store.state.city.lat, this.$store.state.city.lng).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-        })
+
         console.log("log sortedDateObjects in created sun.vue: ", this.sortedDateObjects)
     },
 
@@ -221,8 +210,6 @@ export default {
             this.currentTemp = values.currentTemp
             this.currentWeatherSymbol = values.currentWeatherSymbol
             this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
-            getSunrise()
-            getSunset()
         },
     },
     computed: {
