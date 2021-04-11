@@ -5,6 +5,8 @@ import getMonth from "date-fns/getMonth"
 import getDate from "date-fns/getDate"
 import format from "date-fns/format"
 import parseJSON from "date-fns/parseJSON"
+import { getSunrise, getSunset } from "sunrise-sunset-js"
+import differenceInMinutes from "date-fns/differenceInMinutes"
 
 // const gbg = { name: "Göteborg", lng: 16.158, lat: 58.5812 }
 
@@ -15,7 +17,7 @@ const TemperatureService = {
         const forecast = await response.json()
 
         // Konverterar prognosen till objekt
-        let dataSet = convert(forecast)
+        let dataSet = convert(forecast, city.lng, city.lat)
         // Gör ett objekt för varje dag i prognosen
         let sortedDateObjects = sortByDate(dataSet)
         //console.log("sortedDateObjects: ", sortedDateObjects)
@@ -32,16 +34,24 @@ const TemperatureService = {
     },
 }
 
-function convert(forecast) {
+function convert(forecast, lng, lat) {
     let currentDateData = new Set()
 
     for (const data of forecast.timeSeries) {
         data.validTime = parseJSON(data.validTime)
+        let shortDate = format(data.validTime, "yyyy-MM-dd")
+        let sunRise = getSunrise(lat, lng, new Date(shortDate))
+        let sunSet = getSunset(lat, lng, new Date(shortDate))
+        let sunDuration = differenceInMinutes(sunSet, sunRise)
+
         const thisDate = {
             name: format(data.validTime, "eeee"),
             date: getDate(data.validTime),
             month: format(getMonth(data.validTime), "MMM"),
             // time: hämta timme
+            sunrise: format(sunRise, "HH:mm"),
+            sunset: format(sunSet, "HH:mm"),
+            sunDuration: (sunDuration / 60).toFixed(1),
             temperature: findOneTemp(data.parameters),
         }
         currentDateData.add(thisDate)
