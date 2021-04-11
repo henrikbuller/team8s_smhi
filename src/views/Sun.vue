@@ -29,6 +29,7 @@
         <p class="sun-hours">Antal soltimmar:<br />13h</p>
 
         <!-- <h3>{{ timestamp }}</h3> -->
+
         <Slider v-model="value1" :min="1" :max="24" @change="updateData" style="margin: 10%" />
         <Carousel :items-to-show="3.5" :wrap-around="false" style="font-family: Open Sans Regular; margin: 15px">
             <Slide class="carousel__item" v-for="date in dates" :key="date.name">
@@ -75,7 +76,7 @@ export default {
             currentWeatherSymbol: {},
             imgUrl: "",
             value: null,
-            value1: 1,
+            value1: 5,
             timestamp: "",
             dates: DateList,
             sunrise: "",
