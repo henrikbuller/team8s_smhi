@@ -1,4 +1,8 @@
 <template>
+    <div>
+        <p @click="$router.push('/')">Startsida</p>
+        <p @click="$router.push('about')">Om oss</p>
+    </div>
     <div class="home">
         <p class="top">12:00</p>
         <ve-progress

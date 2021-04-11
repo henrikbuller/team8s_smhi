@@ -1,8 +1,7 @@
 <template>
     <router-view />
     <div id="nav">
-        <router-link to="/">Starsida</router-link> | <router-link to="/about">Vind</router-link> |
-        <router-link to="/sun">Soltimmar</router-link>
+        <router-link to="/"></router-link> <router-link to="/about"></router-link><router-link to="/sun"></router-link>
     </div>
 </template>
 
