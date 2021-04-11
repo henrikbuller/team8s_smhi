@@ -40,7 +40,7 @@
             :currentSlide="currentSlide"
             :settings="settings"
             style="font-family: Open Sans Regular; margin: 15px"
-            @click="nextSlide"
+            @click="carouselClickHandler($event)"
         >
             <Slide
                 class="carousel__item"
@@ -158,12 +158,16 @@ export default {
             }
         },
 
-        nextSlide() {
+        carouselClickHandler() {
+            // Försöker få ut om det klickades på next eller previous
+            // console.log(`The button was clicked at ${event.target.localName}.`)
+
+            // Sets time to noon on the next slide
             this.value = 12
-            console.log("log this ..............................")
             if (this.currentSlide >= 10) {
                 return
             }
+            // keeps count of the current slide index
             this.currentSlide += 1
             console.log(this.currentSlide)
         },
