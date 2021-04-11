@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="mainsun">
         <p class="top">12:00</p>
         <ve-progress
             :progress="(value * 100) / 24"
@@ -283,7 +283,7 @@ body {
 .carousel__prev,
 .carousel__next {
     background-color: lightgray;
-    box-sizing: content-box;
+    box-sizing: border-box;
     border: 5px solid white;
 }
 .carousel__viewport {

@@ -1,0 +1,39 @@
+@use '~bootstrap/scss/bootstrap';
+
+.mainsun {
+    background-image: linear-gradient(#005baa, #40a4dc);
+    min-height: 100vh;
+}
+.home {
+    background-image: linear-gradient(#005baa, #40a4dc);
+    min-height: 100vh;
+}
+
+.navbar {
+    padding-top: 0%;
+    padding-bottom: 0%;
+    border-bottom: 1px solid grey;
+}
+.navbar2 {
+    padding-top: 0%;
+    padding-bottom: 0%;
+    border-bottom: 1px solid grey;
+    font-family: "Open sans", sans-serif;
+}
+
+.navbar-brand {
+    font-size: 22pt;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 800;
+    margin-left: 4em;
+}
+
+.navbar-text {
+    font-size: 15pt;
+    font-family: "Open sans", Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+}
+
+/*.visa {
+    margin-left: 28em;
+}*/
