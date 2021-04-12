@@ -1,9 +1,10 @@
 <template>
     <h1>SVEAVÄDER</h1>
-    <img src="../assets/swedenMap.png" height="400" width="150" alt="sweden map" /><br /><br />
+    <img src="../assets/swedenMap.png" height="500" width="187" alt="sweden map" /><br /><br />
     <div class="home">
-        <menu-component />
-        <button type="button" @click="$router.push('sun')">Nästa</button>
+        <p>Se vädret i</p>
+        <menu-component class="box" />
+        <button class="box" type="button" @click="$router.push('sun')">Nästa</button>
         <!-- <h1>{{ $store.state.city.name }}</h1> -->
     </div>
     <!-- <div>
@@ -77,5 +78,15 @@ export default {
 body {
     background-image: linear-gradient(#002b50, #16374b);
     min-height: 100vh;
+}
+.box {
+    width: 120px;
+    height: 30px;
+    border: 1px solid #999;
+    font-size: 14px;
+    background-color: #eee;
+    border-radius: 5px;
+    text-align: center;
+    display: inline;
 }
 </style>
