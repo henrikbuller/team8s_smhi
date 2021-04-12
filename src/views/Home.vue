@@ -3,6 +3,7 @@
     <img src="../assets/swedenMap.png" height="400" width="150" alt="sweden map" /><br /><br />
     <div class="home">
         <menu-component />
+        <button type="button" @click="$router.push('sun')">Nästa</button>
         <!-- <h1>{{ $store.state.city.name }}</h1> -->
     </div>
     <!-- <div>
