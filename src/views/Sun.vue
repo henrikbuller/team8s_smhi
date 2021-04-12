@@ -6,10 +6,10 @@
             color="white"
             :thickness="1"
             empty-thickness="1%"
-            dash=" 24 1"
-            :size="240"
+            dash="24 3"
+            :size="200"
             dot="10% #FFD604"
-            :angle="100"
+            :angle="90"
         >
             <div class="middle" style="display: flex; flex-direction: column">
                 <div id="symbol">
@@ -19,24 +19,31 @@
                         style="flex: 1; height: 100px; justify-content: center; align-items: center"
                     />
                 </div>
-                <div id="currentTime" style="flex: 1; height: 100px; justify-content: center; align-items: center">
-                    {{ value }}:00
+                <div
+                    id="currentTime"
+                    style="flex: 1; height: 100px; justify-content: center; align-items: center; font-size: 28px"
+                >
+                    {{ sortedDateObjects[currentSlide][value].time }}
                 </div>
             </div>
         </ve-progress>
         <p class="bottom">00:00</p>
-        <p class="sun">{{ sunrise }} | {{ sunset }}</p>
-        <p class="sun-hours">Antal soltimmar:<br />13h</p>
+        <p class="sun">
+            <img src="../assets/sun_rise_set.png" alt="sunrise" style="height: 10px" />
+            {{ sortedDateObjects[currentSlide][0].sunrise }} | {{ sortedDateObjects[currentSlide][0].sunset }}
+            <img src="../assets/sun_rise_set.png" alt="sunrise" style="height: 10px" />
+        </p>
+        <p class="sun-hours">Antal soltimmar: <br />{{ sortedDateObjects[currentSlide][0].sunDuration }}h</p>
 
         <!-- <h3>{{ timestamp }}</h3> -->
-        <Slider v-model="value" :min="1" :max="24" @change="updateData" style="margin: 10%" />
+        <Slider v-model="value" :min="1" :max="23" @change="updateData" style="margin: 10%" />
         <Carousel
             :items-to-show="1"
             :wrap-around="false"
             :currentSlide="currentSlide"
             :settings="settings"
             style="font-family: Open Sans Regular; margin: 15px"
-            @click="nextSlide"
+            @click="carouselClickHandler($event)"
         >
             <Slide
                 class="carousel__item"
@@ -49,10 +56,24 @@
                     {{ date[0].date }} {{ date[0].month }}
                 </div>
                 <div class="temp">{{ date[value].temperature }}°C</div>
-                <!-- <div style="overflow-x: hidden; width: 100%; margin-bottom: 0px; position: absolute; bottom: 0">
-                    <div style="float: left; font-size: 14px">L:-9°</div>
-                    <div style="float: right; font-size: 14px">H:21°</div>
-                </div> -->
+                <div
+                    style="
+                        overflow-x: hidden;
+                        width: 100%;
+                        margin-bottom: 0px;
+                        position: absolute;
+                        bottom: 0;
+                        display: flex;
+                        justify-content: space-between;
+                    "
+                >
+                    <div style="font-size: 14px; margin-left: 1em">
+                        L:{{ sortedDateObjects[currentSlide][value].lowest }}°
+                    </div>
+                    <div style="font-size: 14px; margin-right: 1em">
+                        H:{{ sortedDateObjects[currentSlide][value].lowest }}°
+                    </div>
+                </div>
             </Slide>
 
             <template #addons>
@@ -75,13 +96,13 @@ import "vue3-carousel/dist/carousel.css"
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 import "vue3-carousel/dist/carousel.css"
 import DateList from "../lib/DateList.js"
-import { getSunrise, getSunset } from "sunrise-sunset-js"
 
 //import Data from "../lib/Data.js"
 function getSliderPosition() {
     const date = new Date()
     return date.getHours()
 }
+
 export default {
     name: "Current temperature",
     data() {
@@ -94,13 +115,15 @@ export default {
             timestamp: "",
             dates: DateList,
             sunrise: "",
-            sunHours: "",
+            sunset: "",
+            sunDuration: "",
             currentSlide: 0,
             settings: {
                 snapAlign: "center",
             },
-            time: 0,
+            time: "",
             dayLength: "",
+
             //  sunset: "",
 
             //  city: Data.city,
@@ -122,8 +145,6 @@ export default {
             // if (this.value != time) {
             //     this.time = this.value
             // }
-
-            this.time = this.timePlusOne()
 
             console.log("this.dayLength: ", this.getDayLength())
             // this.sortedDateObjects = values.sortedDateObjects
@@ -153,18 +174,17 @@ export default {
                 return
             }
         },
-        getSunrise() {
-            this.sunrise = getSunrise(this.$store.state.city.lng, this.$store.state.city.lat)
-        },
-        getSunset() {
-            this.sunset = getSunset(this.$store.state.city.lng, this.$store.state.city.lat)
-        },
-        nextSlide() {
+
+        carouselClickHandler() {
+            // Försöker få ut om det klickades på next eller previous
+            // console.log(`The button was clicked at ${event.target.localName}.`)
+
+            // Sets time to noon on the next slide
             this.value = 12
-            console.log("log this ..............................")
             if (this.currentSlide >= 10) {
                 return
             }
+            // keeps count of the current slide index
             this.currentSlide += 1
             console.log(this.currentSlide)
         },
@@ -175,9 +195,6 @@ export default {
             const today = new Date()
             let time = today.getHours()
             return time
-        },
-        timePlusOne(time) {
-            return time + 1
         },
     },
     components: {
@@ -204,14 +221,7 @@ export default {
         // if (this.currentSlide > 0) {
         //     this.value = 0
         // }
-        this.sunrise = getSunrise(this.$store.state.city.lat, this.$store.state.city.lng).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-        })
-        this.sunset = getSunset(this.$store.state.city.lat, this.$store.state.city.lng).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-        })
+
         console.log("log sortedDateObjects in created sun.vue: ", this.sortedDateObjects)
     },
 
@@ -221,8 +231,6 @@ export default {
             this.currentTemp = values.currentTemp
             this.currentWeatherSymbol = values.currentWeatherSymbol
             this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
-            getSunrise()
-            getSunset()
         },
     },
     computed: {
