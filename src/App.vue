@@ -10,10 +10,6 @@
     text-align: center;
     color: white;
 }
-/*body {
-    background-image: linear-gradient(#005baa, #40a4dc);
-    min-height: 100vh;
-}*/
 
 #nav {
     margin: 0px;
