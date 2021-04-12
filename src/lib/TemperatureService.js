@@ -15,12 +15,12 @@ const TemperatureService = {
         const url = `${BASE_URL}/category/pmp3g/version/2/geotype/point/lon/${city.lng}/lat/${city.lat}/data.json`
         const response = await fetch(url)
         const forecast = await response.json()
-
+        console.log("forecast: ", forecast)
         // Konverterar prognosen till objekt
         let dataSet = convert(forecast, city.lng, city.lat)
         // Gör ett objekt för varje dag i prognosen
         let sortedDateObjects = sortByDate(dataSet)
-        //console.log("sortedDateObjects: ", sortedDateObjects)
+        console.log("sortedDateObjects: ", sortedDateObjects)
 
         const currentTemp = findTemperature(forecast.timeSeries[hour].parameters)
         //console.log("current temp inside service async method:", currentTemp)
@@ -48,7 +48,7 @@ function convert(forecast, lng, lat) {
             name: format(data.validTime, "eeee"),
             date: getDate(data.validTime),
             month: format(getMonth(data.validTime), "MMM"),
-            // time: hämta timme
+            time: format(data.validTime, "HH:mm"),
             sunrise: format(sunRise, "HH:mm"),
             sunset: format(sunSet, "HH:mm"),
             sunDuration: (sunDuration / 60).toFixed(1),
@@ -129,6 +129,29 @@ function matchDate(dataSet, date) {
         currentDateList.fill(val4, 12, 16)
         currentDateList.fill(val5, 16, 20)
         currentDateList.fill(val6, 20, 24)
+    }
+    if (currentDateList.length === 8) {
+        const placeHolder = currentDateList[0]
+        const val1 = currentDateList[0]
+        const val2 = currentDateList[1]
+        const val3 = currentDateList[2]
+        const val4 = currentDateList[3]
+        const val5 = currentDateList[4]
+        const val6 = currentDateList[5]
+        const val7 = currentDateList[6]
+        const val8 = currentDateList[7]
+
+        while (currentDateList.length < 24) {
+            currentDateList.push(placeHolder)
+        }
+        currentDateList.fill(val1, 0, 3)
+        currentDateList.fill(val2, 3, 6)
+        currentDateList.fill(val3, 6, 9)
+        currentDateList.fill(val4, 9, 12)
+        currentDateList.fill(val5, 12, 15)
+        currentDateList.fill(val6, 15, 18)
+        currentDateList.fill(val7, 18, 21)
+        currentDateList.fill(val8, 21, 24)
     } else {
         while (currentDateList.length < 24) {
             currentDateList.unshift(currentDateList[0])
@@ -136,7 +159,7 @@ function matchDate(dataSet, date) {
     }
 
     // console.log("Logging matchDate:")
-    console.log("nya if-satsen length <= 2: ", currentDateList)
+    console.log("date object filler function ", currentDateList)
     return currentDateList
 }
 
