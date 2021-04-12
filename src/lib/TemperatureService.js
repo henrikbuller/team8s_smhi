@@ -16,9 +16,11 @@ const TemperatureService = {
         const response = await fetch(url)
         const forecast = await response.json()
         console.log("forecast: ", forecast)
+
         // Konverterar prognosen till objekt
         let dataSet = convert(forecast, city.lng, city.lat)
-        // Gör ett objekt för varje dag i prognosen
+
+        // Gör ett objekt för varje dag i prognosen och lägger i en lista
         let sortedDateObjects = sortByDate(dataSet)
         console.log("sortedDateObjects: ", sortedDateObjects)
 
@@ -53,6 +55,8 @@ function convert(forecast, lng, lat) {
             sunset: format(sunSet, "HH:mm"),
             sunDuration: (sunDuration / 60).toFixed(1),
             temperature: findOneTemp(data.parameters),
+            lowest: "",
+            highest: "",
         }
         currentDateData.add(thisDate)
     }
@@ -172,7 +176,7 @@ function sortByDate(dataSet) {
         sortedDataList.push(matchDate(dataSet, today + i))
     }
 
-    return sortedDataList
+    return findHighAndLowTemp(sortedDataList)
 }
 function findOneTemp(parameters) {
     for (const param of parameters) {
@@ -189,6 +193,27 @@ function findTemperature(parameters) {
     }
 
     throw new Error("unable to find parameter for temperature")
+}
+function findHighAndLowTemp(sortedDataList) {
+    let highest = -1000
+    let lowest = 1000
+
+    for (let dates of sortedDataList) {
+        for (let date of dates) {
+            if (date.temperature > highest) {
+                highest = date.temperature
+            }
+            if (date.temperature < lowest) {
+                lowest = date.temperature
+            }
+        }
+        for (let date of dates) {
+            date.lowest = lowest
+            date.highest = highest
+        }
+    }
+    console.log("test if lowest exists in object: ", sortedDataList)
+    return sortedDataList
 }
 
 function findWeatherSymbol(parameters) {
