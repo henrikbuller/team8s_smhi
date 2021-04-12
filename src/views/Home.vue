@@ -1,7 +1,6 @@
 <template>
     <div class="home">
         <navbar />
-        <h1>SVEAVÄDER</h1>
         <img src="../assets/swedenMap.png" height="500" width="187" alt="sweden map" /><br /><br />
         <p>Se vädret i</p>
         <menu-component class="box" />
@@ -28,7 +27,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: black;
+    color: white;
 }
 
 .box {
@@ -40,9 +39,5 @@ export default {
     border-radius: 5px;
     text-align: center;
     display: inline;
-}
-body {
-    background-image: linear-gradient(#002b50, #16374b);
-    min-height: 100vh;
 }
 </style>
