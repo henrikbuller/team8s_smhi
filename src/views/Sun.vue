@@ -6,10 +6,10 @@
             color="white"
             :thickness="1"
             empty-thickness="1%"
-            dash=" 24 1"
-            :size="240"
+            dash="24 3"
+            :size="200"
             dot="10% #FFD604"
-            :angle="100"
+            :angle="90"
         >
             <div class="middle" style="display: flex; flex-direction: column">
                 <div id="symbol">
@@ -19,8 +19,11 @@
                         style="flex: 1; height: 100px; justify-content: center; align-items: center"
                     />
                 </div>
-                <div id="currentTime" style="flex: 1; height: 100px; justify-content: center; align-items: center">
-                    {{ value }}:00
+                <div
+                    id="currentTime"
+                    style="flex: 1; height: 100px; justify-content: center; align-items: center; font-size: 28px"
+                >
+                    {{ sortedDateObjects[currentSlide][value].time }}
                 </div>
             </div>
         </ve-progress>
@@ -33,7 +36,7 @@
         <p class="sun-hours">Antal soltimmar: <br />{{ sortedDateObjects[currentSlide][0].sunDuration }}h</p>
 
         <!-- <h3>{{ timestamp }}</h3> -->
-        <Slider v-model="value" :min="1" :max="24" @change="updateData" style="margin: 10%" />
+        <Slider v-model="value" :min="1" :max="23" @change="updateData" style="margin: 10%" />
         <Carousel
             :items-to-show="1"
             :wrap-around="false"
@@ -104,7 +107,7 @@ export default {
             settings: {
                 snapAlign: "center",
             },
-            time: 0,
+            time: "",
             dayLength: "",
 
             //  sunset: "",
