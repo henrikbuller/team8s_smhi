@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <navbar />
         <h1>SVEAVÄDER</h1>
         <img src="../assets/swedenMap.png" height="400" width="150" alt="sweden map placeholder" />
         <menu-component />
@@ -31,12 +32,14 @@
 
 <script>
 import MenuComponent from "../components/MenuComponent.vue"
+import Navbar from "../components/Navbar.vue"
 //import Data from "../lib/Data.js"
 
 export default {
     name: "Home",
     components: {
         MenuComponent,
+        Navbar,
     },
     // data() {
     //     return {
@@ -71,7 +74,7 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: white;
+    color: black;
 }
 /*body {
     background-image: linear-gradient(#002b50, #16374b);

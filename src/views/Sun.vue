@@ -1,5 +1,6 @@
 <template>
     <div class="mainsun">
+        <navbar />
         <p class="top">12:00</p>
         <ve-progress
             :progress="(value * 100) / 24"
@@ -76,6 +77,7 @@ import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel"
 import "vue3-carousel/dist/carousel.css"
 import DateList from "../lib/DateList.js"
 import { getSunrise, getSunset } from "sunrise-sunset-js"
+import Navbar from "../components/Navbar.vue"
 
 //import Data from "../lib/Data.js"
 function getSliderPosition() {
@@ -187,6 +189,7 @@ export default {
         Pagination,
         Navigation,
         VeProgress,
+        Navbar,
     },
     async created() {
         let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value)

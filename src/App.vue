@@ -1,9 +1,5 @@
 <template>
     <router-view />
-    <div id="nav">
-        <router-link to="/">Starsida</router-link> | <router-link to="/about">Om oss</router-link> |
-        <router-link to="/sun">Soltimmar</router-link>
-    </div>
 </template>
 
 <style scoped>

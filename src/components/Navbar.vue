@@ -15,23 +15,12 @@
                             aria-expanded="false"
                             aria-label="Toggle navigation"
                         >
-                            <span class="navbar-toggler-icon" id="ham"></span>
+                            <span class="navbar-toggler-icon"></span>
                         </button>
                     </div>
 
                     <div class="col-sm-3" id="drop">
-                        <select class="form-select" id="inlineFormSelectPref">
-                            <span class="navbar-text">Visa väder i</span>
-                            <option selected>Visa väder i...</option>
-                            <option value="1">Göteborg</option>
-                            <option value="2">Helsingborg</option>
-                            <option value="3">Jönköping</option>
-                            <option value="4">Linköping</option>
-                            <option value="5">Malmö</option>
-                            <option value="6">Stockholm</option>
-                            <option value="7">Uppsala</option>
-                            <option value="8">Västerås</option>
-                        </select>
+                        <menu-component />
                     </div>
 
                     <div class="row justify-content-evenly">
@@ -63,8 +52,12 @@
 </template>
 
 <script>
+import MenuComponent from "../components/MenuComponent.vue"
 export default {
     name: "Navbar",
+    components: {
+        MenuComponent,
+    },
 }
 </script>
 
