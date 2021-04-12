@@ -1,7 +1,6 @@
 <template>
     <div class="home">
-        <navbar />
-        <h1>SVEAVÄDER</h1>
+        <navbar /><br />
         <img src="../assets/swedenMap.png" height="500" width="187" alt="sweden map" /><br /><br />
         <p>Se vädret i</p>
         <menu-component class="box" />
