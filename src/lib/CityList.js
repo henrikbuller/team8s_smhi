@@ -1,4 +1,5 @@
 const CityList = [
+    { name: "Välj stad", lng: 0.0, lat: 0.0 },
     { name: "Göteborg", lng: 16.158, lat: 58.5812 },
     { name: "Helsingborg", lng: 12.68, lat: 56.04 },
     { name: "Jönköping", lng: 14.17, lat: 57.78 },

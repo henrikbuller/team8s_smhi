@@ -3,7 +3,7 @@
         <select v-model="selected">
             <option v-for="city in cities" :value="city" :key="city.name">{{ city.name }}</option>
         </select>
-        <h1>{{ selected.name }}</h1>
+        <!-- <h1>{{ selected.name }}</h1> -->
     </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
     data() {
         return {
             cities: CityList,
-            selected: {},
+            selected: CityList[0],
         }
     },
     watch: {
