@@ -35,12 +35,23 @@
                     </div>
 
                     <div class="row justify-content-evenly">
-                        <div class="col-12">
+                        <div class="col-12" id="nav-text">
                             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                                <div class="navbar-nav">
-                                    <a class="nav-link active" aria-current="page" href="#">Soltimmar |</a>
-                                    <a class="nav-link" href="#">Jämför städer |</a>
-                                    <a class="nav-link" href="#">Om oss </a>
+                                <div class="text-decoration-none">
+                                    <router-link style="text-decoration: none; color: inherit" to="/"
+                                        >Starsida</router-link
+                                    >
+                                    |
+                                    <router-link style="text-decoration: none; color: inherit" to="/sun"
+                                        >Soltimmar</router-link
+                                    >
+                                    |
+                                    <router-link style="text-decoration: none; color: inherit" to="/about"
+                                        >Om oss</router-link
+                                    >
+                                    <!--<a class="nav-link active" aria-current="page" href="/sun">Soltimmar |</a>
+                                        <a class="nav-link" href="#">Jämför städer |</a>
+                                        <a class="nav-link" href="/about">Om oss </a>-->
                                 </div>
                             </div>
                         </div>
