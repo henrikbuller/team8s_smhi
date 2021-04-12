@@ -1,12 +1,8 @@
 <template>
     <router-view />
-    <div id="nav">
-        <router-link to="/">Starsida</router-link> | <router-link to="/about">Vind</router-link> |
-        <router-link to="/sun">Soltimmar</router-link>
-    </div>
 </template>
 
-<style>
+<style scoped>
 #app {
     font-family: Open Sans Regular;
     -webkit-font-smoothing: antialiased;
@@ -14,10 +10,10 @@
     text-align: center;
     color: white;
 }
-body {
+/*body {
     background-image: linear-gradient(#005baa, #40a4dc);
     min-height: 100vh;
-}
+}*/
 
 #nav {
     margin: 0px;
@@ -28,9 +24,5 @@ body {
 #nav a {
     font-weight: bold;
     color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-    color: #42b983;
 }
 </style>
