@@ -9,31 +9,47 @@
     min-height: 100vh;
 }
 
-.navbar {
-    padding-top: 0%;
-    padding-bottom: 0%;
-    border-bottom: 1px solid grey;
+.about {
+    background-color: white;
+    color: black;
 }
-.navbar2 {
+
+.text {
+    margin-top: 3em;
+    padding-left: 2.5ch;
+    font-family: "Open sans", regular;
+    text-align: start;
+}
+
+.outer {
+    background-color: lightgray;
+}
+
+.bottomright {
+    float: right;
+}
+
+#content {
+    background-color: white;
+}
+
+.navbar {
     padding-top: 0%;
     padding-bottom: 0%;
     border-bottom: 1px solid grey;
     font-family: "Open sans", sans-serif;
 }
 
+.navbar-toggler {
+    float: left;
+}
+
+#drop {
+    padding-top: 0.5em;
+}
+
 .navbar-brand {
     font-size: 22pt;
     font-family: "Open Sans", sans-serif;
     font-weight: 800;
-    margin-left: 4em;
 }
-
-.navbar-text {
-    font-size: 15pt;
-    font-family: "Open sans", Arial, Helvetica, sans-serif;
-    font-weight: lighter;
-}
-
-/*.visa {
-    margin-left: 28em;
-}*/

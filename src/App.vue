@@ -6,7 +6,7 @@
     </div>
 </template>
 
-<style>
+<style scoped>
 #app {
     font-family: Open Sans Regular;
     -webkit-font-smoothing: antialiased;

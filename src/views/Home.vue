@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <h1>SVEAVÄDER</h1>
-        <img src="../assets/sweden-map.jpg" height="400" width="150" alt="sweden map placeholder" />
+        <img src="../assets/swedenMap.png" height="400" width="150" alt="sweden map placeholder" />
         <menu-component />
         <!-- <h1>{{ $store.state.city.name }}</h1> -->
     </div>
@@ -73,8 +73,8 @@ export default {
     text-align: center;
     color: white;
 }
-body {
+/*body {
     background-image: linear-gradient(#002b50, #16374b);
     min-height: 100vh;
-}
+}*/
 </style>
