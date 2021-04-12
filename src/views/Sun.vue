@@ -56,9 +56,23 @@
                     {{ date[0].date }} {{ date[0].month }}
                 </div>
                 <div class="temp">{{ date[value].temperature }}°C</div>
-                <div style="overflow-x: hidden; width: 100%; margin-bottom: 0px; position: absolute; bottom: 0">
-                    <div style="float: left; font-size: 14px">L:-9°</div>
-                    <div style="float: right; font-size: 14px">H:21°</div>
+                <div
+                    style="
+                        overflow-x: hidden;
+                        width: 100%;
+                        margin-bottom: 0px;
+                        position: absolute;
+                        bottom: 0;
+                        display: flex;
+                        justify-content: space-between;
+                    "
+                >
+                    <div style="font-size: 14px; margin-left: 1em">
+                        L:{{ sortedDateObjects[currentSlide][value].lowest }}°
+                    </div>
+                    <div style="font-size: 14px; margin-right: 1em">
+                        H:{{ sortedDateObjects[currentSlide][value].lowest }}°
+                    </div>
                 </div>
             </Slide>
 
