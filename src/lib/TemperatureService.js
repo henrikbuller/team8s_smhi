@@ -1,14 +1,11 @@
 const BASE_URL = "https://opendata-download-metfcst.smhi.se/api"
-// import getDayOfYear from "date-fns/getDayOfYear"
-// import { sv } from "date-fns/locale"
+
 import getMonth from "date-fns/getMonth"
 import getDate from "date-fns/getDate"
 import format from "date-fns/format"
 import parseJSON from "date-fns/parseJSON"
 import { getSunrise, getSunset } from "sunrise-sunset-js"
 import differenceInMinutes from "date-fns/differenceInMinutes"
-
-// const gbg = { name: "Göteborg", lng: 16.158, lat: 58.5812 }
 
 const TemperatureService = {
     async updateWeatherData(city, hour) {
@@ -17,17 +14,14 @@ const TemperatureService = {
         const forecast = await response.json()
         console.log("forecast: ", forecast)
 
-        // Konverterar prognosen till objekt
+        // convert forecast to objects
         let dataSet = convert(forecast, city.lng, city.lat)
 
-        // Gör ett objekt för varje dag i prognosen och lägger i en lista
+        // Makes an object for every day in forecast and adds to a list
         let sortedDateObjects = sortByDate(dataSet)
-        console.log("sortedDateObjects: ", sortedDateObjects)
 
         const currentTemp = findTemperature(forecast.timeSeries[hour].parameters)
-        //console.log("current temp inside service async method:", currentTemp)
         const currentWeatherSymbol = findWeatherSymbol(forecast.timeSeries[hour].parameters)
-        // console.log("WeatherSymbol: ", currentWeatherSymbol)
         return {
             currentTemp,
             currentWeatherSymbol,
@@ -60,10 +54,6 @@ function convert(forecast, lng, lat) {
         }
         currentDateData.add(thisDate)
     }
-    // console.log("Logging convert function")
-    // console.log("currentDateData:")
-    // console.log(currentDateData)
-
     return currentDateData
 }
 
@@ -75,7 +65,7 @@ function matchDate(dataSet, date) {
         }
     }
 
-    // Kolla hur många i varje lista
+    // Check number of in every list
     if (currentDateList.length === 2) {
         while (currentDateList.length <= 12) {
             currentDateList.unshift(currentDateList[0])
@@ -93,7 +83,6 @@ function matchDate(dataSet, date) {
         while (currentDateList.length < 24) {
             currentDateList.push(placeHolder)
         }
-        // currentDateList.fill(val1, 0, 23)
         currentDateList.fill(val1, 0, 8)
         currentDateList.fill(val2, 8, 16)
         currentDateList.fill(val3, 16, 24)
@@ -108,7 +97,6 @@ function matchDate(dataSet, date) {
         while (currentDateList.length < 24) {
             currentDateList.push(placeHolder)
         }
-        // currentDateList.fill(val1, 0, 23)
         currentDateList.fill(val1, 0, 6)
         currentDateList.fill(val2, 6, 12)
         currentDateList.fill(val3, 12, 18)
@@ -126,7 +114,6 @@ function matchDate(dataSet, date) {
         while (currentDateList.length < 24) {
             currentDateList.push(placeHolder)
         }
-        // currentDateList.fill(val1, 0, 23)
         currentDateList.fill(val1, 0, 4)
         currentDateList.fill(val2, 4, 8)
         currentDateList.fill(val3, 8, 12)
@@ -161,9 +148,6 @@ function matchDate(dataSet, date) {
             currentDateList.unshift(currentDateList[0])
         }
     }
-
-    // console.log("Logging matchDate:")
-    console.log("date object filler function ", currentDateList)
     return currentDateList
 }
 
@@ -171,7 +155,7 @@ function sortByDate(dataSet) {
     const sortedDataList = []
     const today = new Date().getDate()
 
-    // Gör 10st listor av objekt baserat på objektens datum
+    // Constructs 10 lists of objects based on the objects dates
     for (let i = 0; i < 10; ++i) {
         sortedDataList.push(matchDate(dataSet, today + i))
     }

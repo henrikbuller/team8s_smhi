@@ -36,7 +36,6 @@
         </p>
         <p class="sun-hours">Antal soltimmar: <br />{{ sortedDateObjects[currentSlide][0].sunDuration }}h</p>
 
-        <!-- <h3>{{ timestamp }}</h3> -->
         <Slider v-model="value" :min="1" :max="23" @change="updateData" style="margin: 10%" />
         <Carousel
             :items-to-show="1"
@@ -87,10 +86,8 @@
 
 <script>
 // @ is an alias to /src
-
 import TemperatureService from "../lib/TemperatureService.js"
 import WeatherSymbol from "../lib/WeatherSymbol.js"
-//import Slider from "../components/SliderComponent.vue"
 import Slider from "primevue/slider"
 import { VeProgress } from "vue-ellipse-progress"
 import "vue3-carousel/dist/carousel.css"
@@ -99,7 +96,7 @@ import "vue3-carousel/dist/carousel.css"
 import DateList from "../lib/DateList.js"
 import Navbar from "../components/Navbar.vue"
 
-//import Data from "../lib/Data.js"
+//Binds the slider to current time
 function getSliderPosition() {
     const date = new Date()
     return date.getHours()
@@ -125,33 +122,12 @@ export default {
             },
             time: "",
             dayLength: "",
-
-            //  sunset: "",
-
-            //  city: Data.city,
         }
     },
     methods: {
         async updateData() {
-            // välj nästa objekt i listan hos currentSlide
-            // this.currentSlide.date[value]
-
             let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value)
-            // this.currentTemp = values.currentTemp
-            // let time = this.getHour()
-            // console.log("time: ", time)
 
-            // if (this.value === time) {
-            //     this.time = this.value - time
-            // }
-            // if (this.value != time) {
-            //     this.time = this.value
-            // }
-
-            console.log("this.dayLength: ", this.getDayLength())
-            // this.sortedDateObjects = values.sortedDateObjects
-            console.log("current slide in updateData():", this.currentSlide)
-            console.log("updateData value: ", this.value)
             //Call current weather symbol
             this.currentWeatherSymbol = values.currentWeatherSymbol
             this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
@@ -178,9 +154,6 @@ export default {
         },
 
         carouselClickHandler() {
-            // Försöker få ut om det klickades på next eller previous
-            // console.log(`The button was clicked at ${event.target.localName}.`)
-
             // Sets time to noon on the next slide
             this.value = 12
             if (this.currentSlide >= 10) {
@@ -212,20 +185,10 @@ export default {
         let values = await TemperatureService.updateWeatherData(this.$store.state.city, this.value)
         this.currentTemp = values.currentTemp
         this.sortedDateObjects = values.sortedDateObjects
-        //Call current weather symbol
         this.currentWeatherSymbol = values.currentWeatherSymbol
         this.imgUrl = WeatherSymbol.setWeatherSymbol(this.currentWeatherSymbol)
         this.calculateTime()
         console.log("klockan: ", this.value)
-
-        // if (this.currentSlide === 0) {
-        //     this.value = this.getHours()
-        // }
-        // if (this.currentSlide > 0) {
-        //     this.value = 0
-        // }
-
-        console.log("log sortedDateObjects in created sun.vue: ", this.sortedDateObjects)
     },
 
     watch: {
@@ -271,8 +234,6 @@ body {
 .carousel__item {
     min-height: 140px;
     width: 100%;
-    /* background-color: var(--carousel-color-primary); */
-
     font-size: 20px;
     border-radius: 8px;
     border-style: solid;
