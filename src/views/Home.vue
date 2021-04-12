@@ -2,7 +2,6 @@
     <div class="home">
         <navbar /><br />
         <img src="../assets/swedenMap.png" height="500" width="187" alt="sweden map" /><br /><br />
-        <p>Se vädret i</p>
         <menu-component class="box" />
         <button class="box" type="button" @click="$router.push('sun')">Nästa</button>
     </div>
