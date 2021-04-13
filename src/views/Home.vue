@@ -39,8 +39,4 @@ export default {
     text-align: center;
     display: inline;
 }
-body {
-    background-image: linear-gradient(#002b50, #16374b);
-    min-height: 100vh;
-}
 </style>
