@@ -2,7 +2,6 @@ function setWeatherSymbol(Wsymb2) {
     let imgUrl = ""
     function isNight() {
         let hour = new Date().getHours()
-        // console.log(hour)
         if (hour > 20 || hour < 6) {
             return true
         }
